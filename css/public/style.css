@@ -371,6 +371,19 @@ li.addressBook-share-item span.shareeIdentifier {
 	opacity: .5;
 }
 
+ul.addressBookList li {
+    margin-bottom: 5px;
+}
+
+ul.addressBook-share-list {
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+ul.addressBook-share-list li {
+    margin-left: 15px;
+}
+
 #app-navigation .utils .action span {
 	cursor: pointer !important;
 }
@@ -422,4 +435,25 @@ detailsitem .select2-container {
 }
 .select2-results .select2-result-label span {
 	cursor: pointer !important;
+}
+
+@media only screen and (max-width: 768px) {
+
+/* full width for message list on mobile */
+.app-content-list {
+	width: 100%;
+}
+
+/* overlay message detail on top of message list */
+.app-content-detail {
+	z-index: 100;
+	background: #fff;
+	width: 100%;
+	left: 0;
+	height: 100%;
+	top: 0;
+	box-shadow: 0 0 100px rgba(100, 100, 100, .9);
+}
+
+/* end of media query */
 }
