@@ -19,6 +19,29 @@
 	border: none !important;
 }
 
+/* put organization and title in header too, below name */
+detailsitem.details-item-org,
+detailsitem.details-item-title {
+	position: absolute;
+	top: 58px;
+}
+detailsitem.details-item-org {
+	left: 102px;
+}
+detailsitem.details-item-title {
+	left: 202px;
+}
+detailsitem.details-item-org label,
+detailsitem.details-item-title label {
+	display: none;
+}
+detailsitem.details-item-org input,
+detailsitem.details-item-title input {
+	color: #fff;
+	background: transparent;
+	border: none;
+}
+
 .contactdetails__header .icon-delete-white {
 	position: absolute;
 	right: 0;
