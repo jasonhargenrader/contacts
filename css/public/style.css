@@ -140,7 +140,7 @@ detailsitem input[type="date"],
 detailsitem textarea,
 .select-addressbook select,
 .add-field {
-	width: 200px;
+	width: 245px;
 }
 
 detailsitem .icon-delete {
@@ -402,7 +402,7 @@ ul.addressBook-share-list li {
 /* SELECT2 styling - MOVE TO CORE FOR 9.1! */
 
 detailsitem .select2-container {
-	width: 200px;
+	width: 245px;
 }
 .select2-container-multi .select2-choices {
 	border-color: #ddd !important;
