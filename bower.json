@@ -26,7 +26,8 @@
     "angular-uuid4": "0.3.1",
     "jquery-timepicker": "883bb2cd94",
     "ui-select": "angular-ui/ui-select#0.14.9",
-    "vcard": "0.2.4"
+    "vcard": "0.2.4",
+    "davclient.js": "evert/davclient.js#aac08f74e8d10fdf17cdfb9ee4edd205b9363f74"	  
   },
   "devDependencies": {
     "angular-mocks": "1.5.0"
