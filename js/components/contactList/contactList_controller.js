@@ -72,7 +72,11 @@ app.controller('contactlistCtrl', function($scope, $filter, $route, $routeParams
 		});
 	});
 
-	$scope.$watch('ctrl.routeParams.uid', function(newValue) {
+	$scope.$watch('ctrl.routeParams.uid', function(newValue, oldValue) {
+		// Used for mobile view to clear the url
+		if(typeof oldValue != 'undefined' && typeof newValue == 'undefined') {
+			return;
+		}
 		if(newValue === undefined) {
 			// we might have to wait until ng-repeat filled the contactList
 			if(ctrl.contactList && ctrl.contactList.length > 0) {

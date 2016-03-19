@@ -1,12 +1,17 @@
-app.controller('contactdetailsCtrl', function(ContactService, AddressBookService, vCardPropertiesService, $routeParams, $scope) {
+app.controller('contactdetailsCtrl', function(ContactService, AddressBookService, vCardPropertiesService, $route, $routeParams, $scope) {
+
 	var ctrl = this;
 
 	ctrl.loading = true;
 	ctrl.show = false;
 
 	ctrl.clearContact = function() {
-		delete $routeParams.uid;
+		$route.updateParams({
+			gid: $routeParams.gid,
+			uid: undefined
+		});
 		ctrl.show = false;
+		ctrl.contact = null;
 	};
 
 	ctrl.uid = $routeParams.uid;
