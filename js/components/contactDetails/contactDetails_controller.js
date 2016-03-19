@@ -2,6 +2,12 @@ app.controller('contactdetailsCtrl', function(ContactService, AddressBookService
 	var ctrl = this;
 
 	ctrl.loading = true;
+	ctrl.show = false;
+
+	ctrl.clearContact = function() {
+		delete $routeParams.uid;
+		ctrl.show = false;
+	};
 
 	ctrl.uid = $routeParams.uid;
 	ctrl.t = {
@@ -34,11 +40,14 @@ app.controller('contactdetailsCtrl', function(ContactService, AddressBookService
 
 	ctrl.changeContact = function(uid) {
 		if (typeof uid === 'undefined') {
+			ctrl.show = false;
 			return;
 		}
 		ContactService.getById(uid).then(function(contact) {
 			ctrl.contact = contact;
 			ctrl.photo = ctrl.contact.photo();
+			ctrl.show = true;
+
 			ctrl.addressBook = _.find(ctrl.addressBooks, function(book) {
 				return book.displayName === ctrl.contact.addressBookId;
 			});
