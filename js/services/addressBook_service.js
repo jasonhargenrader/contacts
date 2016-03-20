@@ -1,7 +1,16 @@
 angular.module('contactsApp')
-.factory('AddressBookService', function(DavClient, DavService, SettingsService, AddressBook) {
+.factory('AddressBookService', function(DavClient, SettingsService, AddressBook) {
 
 	var addressBooks = [];
+
+	this._props = [
+		'{' + DavClient.NS_DAV + '}displayname',
+		'{' + DavClient.NS_DAV + '}owner'
+	];
+
+	this._contacts_home = null;
+
+	this._currentUserPrincipal= null;
 
 	var loadAll = function() {
 		return DavService.then(function(account) {
@@ -12,9 +21,45 @@ angular.module('contactsApp')
 	};
 
 	return {
+		discoverHome: function(callback) {
+			return DavClient.propFind(DavClient.buildUrl(OC.linkToRemoteBase('dav')), ['{' + DavClient.NS_DAV + '}current-user-principal'], 0, {'requesttoken': OC.requestToken}).then(function(response) {
+				if (!DavClient.wasRequestSuccessful(response.status)) {
+					throw "DavClient could not be initialized - Querying current-user-principal failed";
+				}
+
+				if (response.body.propStat.length < 1) {
+					return;
+				}
+				var props = response.body.propStat[0].properties;
+				self._currentUserPrincipal = props['{' + DavClient.NS_DAV + '}current-user-principal'][0].textContent;
+
+				return DavClient.propFind(DavClient.buildUrl(self._currentUserPrincipal), ['{' + DavClient.NS_CARDDAV + '}addressbook-home-set'], 0, {'requesttoken': OC.requestToken}).then(function(response) {
+					if (!DavClient.wasRequestSuccessful(response.status)) {
+						throw "DavClient could not be initialized - Querying addressbook-home-set failed";
+					}
+
+					if (response.body.propStat.length < 1) {
+						return;
+					}
+					var props = response.body.propStat[0].properties;
+					this._contacts_home = props['{' + DavClient.NS_CARDDAV + '}addressbook-home-set'][0].textContent;
+
+					return callback();
+				});
+			});
+		},
+		
 		getAll: function() {
-			return loadAll().then(function() {
-				return addressBooks;
+			if (this._contacts_home === null) {
+				return discoverHome(function() {
+					return self.getAll();
+				});
+			}
+
+			console.log(this._contacts_home);
+
+			return DavClient.propFind(DavClient.buildUrl(this._contacts_home), this._props, 1, {'requesttoken': OC.requestToken}).then(function(response) {
+				console.log(reponse);
 			});
 		},
 
